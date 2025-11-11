@@ -1,0 +1,26 @@
+import numpy as np 
+import matplotlib.pyplot as plt  
+
+f=5
+A=1
+T=1
+
+t_cont=np.linspace(0,T,1000)
+x_cont=A*np.sin(2*np.pi*f*t_cont)
+
+fs=50
+Ts=1/fs
+t_disc = np.arange(0, T, Ts)   
+x_disc = A * np.sin(2 * np.pi * f * t_disc) 
+
+plt.figure(figsize=(10, 5))
+plt.plot(t_cont, x_cont, 'b', label='Continuous Sine Wave')
+plt.stem(t_disc, x_disc, linefmt='r-', markerfmt='ro', basefmt='k-', label='Discrete Samples')
+
+plt.title('Continuous vs Discrete Sine Wave')
+plt.xlabel('Time (seconds)')
+plt.ylabel('Amplitude')
+plt.legend()
+plt.grid(True)
+plt.show()
+ 
