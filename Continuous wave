@@ -1,0 +1,18 @@
+import numpy as np 
+import matplotlib.pyplot as plt 
+
+f=10
+A=1
+T=1
+t=np.linspace(0,T,2000)
+
+x=A*np.sin(2*np.pi*f*t)
+
+plt.figure(figsize=(10,4))
+plt.plot(t,x,'b',label='Continuous Sine Wave')
+plt.title('Continuous Sine Wave')
+plt.xlabel('Time(seconds)')
+plt.ylabel('Amplitude')
+plt.grid(True)
+plt.legend()
+plt.show()
