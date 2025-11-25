@@ -1,0 +1,59 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+f = 5         
+A = 1        
+T = 1         
+N_bits = 3    
+N_levels = 2**N_bits  
+
+t_cont = np.linspace(0, T, 1000)
+x_cont = A * np.sin(2 * np.pi * f * t_cont)
+
+fs = 50
+Ts = 1/fs
+t_disc = np.arange(0, T, Ts)
+x_disc = A * np.sin(2 * np.pi * f * t_disc)
+
+delta = 2*A / N_levels  
+x_quant = np.floor((x_disc + A)/delta) * delta - A + delta/2
+
+error = x_disc - x_quant
+
+plt.figure(figsize=(12,8))
+
+
+plt.subplot(3,1,1)
+plt.plot(t_cont, x_cont, 'b', label='Continuous Sine Wave')
+plt.stem(t_disc, x_disc, 'r', basefmt='k-', label='Discrete Samples')
+plt.title('Continuous vs Discrete Sine Wave')
+plt.xlabel('Time (s)')
+plt.ylabel('Amplitude')
+plt.legend()
+plt.grid(True)
+
+
+plt.subplot(3,1,2)
+plt.stem(t_disc, x_quant, 'g', basefmt='k-', label=f'Quantized ({N_bits}-bit)')
+plt.plot(t_disc, x_disc, 'r--', label='Original Discrete')
+plt.title('Quantized Signal')
+plt.xlabel('Time (s)')
+plt.ylabel('Amplitude')
+plt.legend()
+plt.grid(True)
+
+
+plt.subplot(3,1,3)
+plt.stem(t_disc, error, 'm', basefmt='k-')
+plt.title('Quantization Error')
+plt.xlabel('Time (s)')
+plt.ylabel('Error')
+plt.grid(True)
+
+plt.tight_layout()
+plt.show()
+
+
+mse = np.mean(error**2)
+print(f"Quantization MSE: {mse:.6f}")
